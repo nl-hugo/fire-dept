@@ -1,0 +1,59 @@
+{
+  "name": "fire-dept",
+  "version": "0.0.1",
+  "description": "Fire department",
+  "keywords": [
+    "webpack",
+    "bootstrap v4",
+    "font-awesome",
+    "d3.js",
+    "fire department"
+  ],
+  "author": "Hugo Janssen <nl-hugo@hugojanssen.nl> (https://github.com/nl-hugo)",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-hugo/fire-dept.git"
+  },
+  "dependencies": {
+    "d3": "^5.5.0",
+    "jquery": "^3.1.1",
+    "font-awesome": "^4.7.0"
+  },
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-loader": "latest",
+    "babel-preset-es2015": "^6.24.1",
+    "bootstrap": "~4.1.3",
+    "bootstrap-loader": "latest",
+    "css-loader": "latest",
+    "mini-css-extract-plugin": "latest",
+    "eslint": "latest",
+    "eslint-loader": "latest",
+    "exports-loader": "latest",
+    "extract-text-webpack-plugin": "latest",
+    "file-loader": "latest",
+    "html-webpack-plugin": "latest",
+    "imports-loader": "latest",
+    "node-sass": "latest",
+    "postcss-loader": "latest",
+    "resolve-url-loader": "latest",
+    "sass-loader": "latest",
+    "style-loader": "latest",
+    "url-loader": "latest",
+    "webpack": "latest",
+    "webpack-cli": "latest",
+    "webpack-dev-server": "latest"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --inline --hot --progress",
+    "lint:js": "eslint src/ webpack.*.js --cache",
+    "build": "npm run lint:js && webpack -p",
+    "version:patch": "npm version patch",
+    "push:git": "git push --tags origin HEAD:master",
+    "push:gh-pages": "git subtree push --prefix dist origin gh-pages",
+    "push": "npm run push:git && npm run push:gh-pages",
+    "deploy": "npm run version:patch && npm run push"
+  }
+}
