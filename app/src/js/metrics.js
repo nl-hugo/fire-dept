@@ -14,7 +14,10 @@ export function update(data) {
   const types = d3.nest()
       .key(d => d.brandinfo)
       .entries(data)
-      .sort((a, b) => d3.descending(a.values.length, b.values.length));
+      .sort((a, b) => 
+        a.values.length === b.values.length ? 
+        d3.ascending(a.key, b.key) : 
+        d3.descending(a.values.length, b.values.length));
 
   div.selectAll(".a-metric").remove();
 
