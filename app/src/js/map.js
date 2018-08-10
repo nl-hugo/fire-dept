@@ -47,10 +47,7 @@ function addMarker(d) {
 (function init() {
   const base = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?", {
       maxZoom: 18,
-      attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, " +
-          "<a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, " +
-          "Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
-      id: "mapbox.streets"
+      attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
   });
 
   const mymap = L.map("mapid", {
