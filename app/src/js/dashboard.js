@@ -1,5 +1,7 @@
-// dashboard.js
-
+/**
+ * Map dashboard
+ * @module dashboard
+ */
 import * as parameter from "./parameter";
 import * as map from "./map";
 import * as metrics from "./metrics";

@@ -1,4 +1,7 @@
-
+/**
+ * Util module
+ * @module util
+ */
 
 const icons = {
   "gebouwbrand": "home",
@@ -6,12 +9,13 @@ const icons = {
   "hulpverlening": "medkit",
   "voertuig": "car-crash",
   "automatische melding": "bell",
-  "overigen": "comment",
-  "proefalarm": "question",
-  "overige brandgerelateerd": "comment",
+  "proefalarm": "lightbulb",
   "onderzoek": "search",
+  "overige brandgerelateerd": "comment",
+  "overigen": "comment",
 }
 
+/** Returns an icon for the given type */
 export function iconForType(t) {
-  return icons[t];
+  return d3.map(icons).get(t) || "question";
 }

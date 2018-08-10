@@ -51,7 +51,5 @@ main {
 @include generate-elements("automatische_melding", #b1350e);
 */
 
-  // "overigen":
-  // "proefalarm":
-  // "overige brandgerelateerd":
-  // "onderzoek":
+@include generate-elements("prio1-0", $secondary-color);
+@include generate-elements("prio1-1", $primary-color);

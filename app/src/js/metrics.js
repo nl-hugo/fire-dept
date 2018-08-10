@@ -1,26 +1,14 @@
+/**
+ * Metrics module
+ * @module metrics
+ */
 import * as chart from "./mini-chart";
 import { iconForType } from "./util";
 
 const div = d3.select(".a-metrics");
-  // .append("ul")
-    // .attr("class", "fa-ul");
 
 const t = d3.transition()
     .duration(750);
-
-/*
-const icons = {
-  "gebouwbrand": "home",
-  "buitenbrand": "tree",
-  "hulpverlening": "medkit",
-  "voertuig": "car-crash",
-  "automatische melding": "bell",
-  "overigen": "comment",
-  "proefalarm": "question",
-  "overige brandgerelateerd": "comment",
-  "onderzoek": "search",
-}
-*/
 
 export function update(data) {
   console.info("update metrics");
@@ -59,9 +47,6 @@ export function update(data) {
 
   stack.append("i")
       .attr("class", d => "fas fa-" + iconForType(d.key) + " fa-stack-1x fa-inverse");
-      // .attr("data-fa-transform", "shrink-6")
-      // .attr("data-fa-mask", "fas fa-square");
-
 
   divs.append("div")
       .attr("class", "title")
@@ -75,10 +60,6 @@ export function update(data) {
     // .data(d => d.values);
 
   chart.update();
-
-
-
-
 }
 
 function mouseover() {
@@ -88,13 +69,3 @@ function mouseover() {
 function mouseout() {
   
 }
-
-
-
-
-function init() {
-  console.info("init metrics");
-
-}
-
-init();

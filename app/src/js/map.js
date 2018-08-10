@@ -1,74 +1,63 @@
-
-// let mymap, mapLink;
-
+/**
+ * Map module
+ * @module map
+ */
 import { iconForType } from "./util";
+
+const parseDate = d3.timeFormat("%d-%m-%Y");
  
+const alarmeringen = L.layerGroup(),
+    popup = L.popup(),
+    station = {
+      "lat": 52.0607,
+      "lon": 5.3884,
+      "desc": "Brandweer Maarn/Maarsbergen",
+    };
 
-let /*mymap, popup,*/ alarmeringen;
-
-const station = {
-  "lat": 52.060462,
-  "lon": 5.388007,
-  "desc": "Brandweer Maarn/Maarsbergen",
-}
-
-
+/** Update the map */
 export function update(data) {
-  // remove all existing markers, except the station
   alarmeringen.clearLayers();
-
-
   data.filter(d => d.lat && d.lon)
-    .map(d => addMarker(d.lat, d.lon, d.melding, iconForType(d.brandinfo), alarmeringen));
+    .map(d => addMarker(d));
 }
-/*
-function onMapClick(e) {
-  popup.setLatLng(e.latlng)
-    .setContent("You clicked the map at " + e.latlng.toString())
-    .openOn(mymap);
+
+function popupText(d) {
+  return "<b>" + parseDate(d.datum) + "</b><br>" + d.melding;
 }
-*/
-function addMarker(lat, lon, desc, icon, layer) {
-  L.marker([lat, lon], {
+
+function addMarker(d) {
+  // d.lat, d.lon, d.melding, iconForType(d.brandinfo), alarmeringen
+  L.marker([d.lat, d.lon], {
     icon: L.divIcon({
       html: "<i class='fas fa-circle fa-stack-2x'></i>",
       iconSize: [30, 30],
-      className: "myDivIcon"
+      className: "myDivIcon prio1-" + d.prio1
     })
-  }).addTo(layer);
+  }).addTo(alarmeringen);
 
-  L.marker([lat, lon], {
+  L.marker([d.lat, d.lon], {
     icon: L.divIcon({
-      html: "<i class='fas fa-"+ icon +" fa-stack-1x fa-inverse'></i>",
+      html: "<i class='fas fa-"+ iconForType(d.brandinfo) +" fa-stack-1x fa-inverse'></i>",
       iconSize: [30, 30],
       className: "myDivIcon"
     })
-  }).addTo(layer).bindPopup(desc);
+  }).addTo(alarmeringen).bindPopup(popupText(d));
 }
 
 (function init() {
-
   const base = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?", {
-  // L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw", {
       maxZoom: 18,
       attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, " +
           "<a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, " +
           "Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
       id: "mapbox.streets"
-  }); //.addTo(mymap);
-
-  alarmeringen = L.layerGroup();
+  });
 
   const mymap = L.map("mapid", {
     center: [station.lat, station.lon], 
     zoom: 11,
     layers: [base, alarmeringen]
   });
-
-  const popup = L.popup();
-
-
-  // L.control.layers(base, alarmeringen).addTo(mymap);
 
   L.marker([station.lat, station.lon], {
     icon: L.divIcon({
@@ -77,8 +66,4 @@ function addMarker(lat, lon, desc, icon, layer) {
       className: "myDivIcon"
     })
   }).addTo(mymap).bindPopup(station.desc);
-
-  // addMarker(station.lat, station.lon, station.desc, "map-marker-alt", base);
-
-  // mymap.on("click", onMapClick);
 })();

@@ -1,16 +1,7 @@
-
-// console.log(d3);
-
-
-
-// var area = d3.svg.area()
-//     .x(function(d) { return x(d.date); })
-//     .y0(height)
-//     .y1(function(d) { return y(d.price); });
-
-// var line = d3.svg.line()
-//     .x(function(d) { return x(d.date); })
-//     .y(function(d) { return y(d.price); });
+/**
+ * Map mini-chart
+ * @module mini-chart
+ */
 
 
 function init() {

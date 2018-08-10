@@ -1,9 +1,6 @@
 // _parameter.scss
 
 .a-parameter select {
-  /*position: absolute;*/
-  /*width: 100%;*/
-  /*min-width: 160px;*/
   font-size: 0.9em;
   color: darkslategray;
   border: none;
@@ -11,15 +8,14 @@
   border-bottom: 1px solid lightgray;
 }
 
-.a-parameter select:focus,
-.a-parameter select:hover {
-  outline: none;
-  border-bottom: solid 1px $primary-color;
+.a-parameter text {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: gray;
 }
 
-/*.a-parameter select:focus {
-  outline: none;
-  border: 2px solid red;
+.a-parameter select:focus,
+.a-parameter select:hover {
   border-bottom: solid 1px $primary-color;
+  box-shadow: none; 
 }
-*/

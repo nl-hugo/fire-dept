@@ -1,4 +1,7 @@
-
+/**
+ * Parameter module
+ * @module parameter
+ */
 
 let next;
 
@@ -22,6 +25,10 @@ export async function init(label, uri, callback) {
 }
 
 function select(label, dataset, data) {
+  d3.select(label)
+    .append("text")
+      .text(dataset.parameter);
+
   const select = d3.select(label)
     .append("select")
       .attr("class", "form-control form-control-sm")
