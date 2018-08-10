@@ -28,7 +28,12 @@
     "build:production": "webpack --config ./config/webpack-production.config.js --env=production --progress --profile --colors",
     "lint": "eslint ./{server,app,config}/**/*{config,''}.js",
     "postinstall": "npm run build:production",
-    "start": "node server"
+    "start": "node server",
+    "clean": "rimraf shapes",
+    "download": "download --extract --out shapes https://www.cbs.nl/-/media/_pdf/2017/36/buurt_2017.zip",
+    "shape": "ogr2ogr -f GeoJSON -t_srs EPSG:4326 -where WATER='NEE' shapes/gem_2017.json shapes/gem_2017.shp",
+    "topojson": "topojson --id-property GM_CODE -p name=GM_NAAM -s 3e-9 -o app/src/data/gem.json -- shapes/gem_2017.json",
+    "map": "npm run download && npm run shape && npm run topojson && npm run clean"
   },
   "dependencies": {
     "css-loader": "1.0.0",
@@ -45,6 +50,7 @@
     "babel-cli": "6.26.0",
     "babel-eslint": "8.2.6",
     "babel-preset-env": "1.7.0",
+    "download-cli": "1.1.1",
     "eslint": "5.3.0",
     "eslint-config-airbnb": "17.0.0",
     "eslint-config-airbnb-base": "13.0.0",
@@ -52,6 +58,9 @@
     "eslint-plugin-import": "2.13.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-react": "7.10.0",
+    "ogr2ogr": "1.2.1",
+    "rimraf": "2.6.2",
+    "topojson": "~1.6",
     "webpack-cli": "3.1.0"
   }
 }

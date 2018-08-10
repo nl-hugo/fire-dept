@@ -1,0 +1,33 @@
+// _metrics.scss
+
+.a-metric {
+  height: 60px;
+  display: block;
+
+  :hover {
+    cursor:pointer;
+
+  }
+
+  span.fa-stack {
+    float: left;
+  }
+
+  .fa-stack-2x {
+    color: $primary-color;
+  }
+
+  .title {
+    margin-left: 50px;
+    font-size: 0.85em;
+    color: grey;
+  }
+
+  .number {
+    margin-left: 50px;
+    font-size: 1.5em;
+    font-weight: bold;
+    /*color: #333;*/
+  }
+}
+
