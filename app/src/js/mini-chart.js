@@ -16,8 +16,8 @@ export function update() {
   const svg = d3.selectAll(".a-metric svg");
 
   svg.each(d => {
-    console.log(d.key);
-    console.log(d.values);
+    // console.log(d.key);
+    // console.log(d.values);
     addChart(svg, d.values);
   });
 

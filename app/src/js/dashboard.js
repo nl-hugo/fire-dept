@@ -51,16 +51,12 @@ async function update(label, value) {
     console.log(uri);
 
     let data = await api.getAlarmeringen(uri);
-    console.log(data);
-
     data.map(d => d.date = parseDate(d.datum));
+    console.log(data);
     // data.forEach(d => d.date = parseDate(d.datum));
     // d3.map(data, d => {console.log(d.date); console.log(d.datum)});
 
     metrics.update(data);
-
-    console.log(map);
-    console.log(data);
     map.update(data);
   }
 }
