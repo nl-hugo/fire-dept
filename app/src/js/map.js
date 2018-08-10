@@ -4,7 +4,7 @@
  */
 import { iconForType } from "./util";
 
-const parseDate = d3.timeFormat("%d-%m-%Y");
+const formatDate = d3.timeFormat("%d-%m-%Y");
  
 const alarmeringen = L.layerGroup(),
     popup = L.popup(),
@@ -22,24 +22,18 @@ export function update(data) {
 }
 
 function popupText(d) {
-  return "<b>" + parseDate(d.datum) + "</b><br>" + d.melding;
+  return "<b>" + formatDate(d.date) + "</b><br>" + d.melding;
 }
 
 function addMarker(d) {
-  // d.lat, d.lon, d.melding, iconForType(d.brandinfo), alarmeringen
   L.marker([d.lat, d.lon], {
     icon: L.divIcon({
-      html: "<i class='fas fa-circle fa-stack-2x'></i>",
+      html: "<span class='fa-stack fa-2x' style='font-size: 1.2em;'>" +
+            "<i class='fas fa-circle fa-stack-2x'></i>" +
+            "<i class='fas fa-" + iconForType(d.brandinfo) + " fa-stack-1x fa-inverse'></i>" +
+            "</span>",
       iconSize: [30, 30],
-      className: "myDivIcon prio1-" + d.prio1
-    })
-  }).addTo(alarmeringen);
-
-  L.marker([d.lat, d.lon], {
-    icon: L.divIcon({
-      html: "<i class='fas fa-"+ iconForType(d.brandinfo) +" fa-stack-1x fa-inverse'></i>",
-      iconSize: [30, 30],
-      className: "myDivIcon"
+      className: "alarmering prio1-" + d.prio1
     })
   }).addTo(alarmeringen).bindPopup(popupText(d));
 }
@@ -60,7 +54,7 @@ function addMarker(d) {
     icon: L.divIcon({
       html: "<i class='fas fa-map-marker-alt fa-2x'></i>",
       iconSize: [30, 30],
-      className: "myDivIcon"
+      className: "alarmering"
     })
   }).addTo(mymap).bindPopup(station.desc);
 })();

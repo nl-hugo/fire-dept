@@ -2,19 +2,14 @@
  * Parameter module
  * @module parameter
  */
-
 let next;
-
 
 export async function init(label, uri, callback) {
   next = callback;
   const dataset = label.dataset;
-  console.log(label);
-  console.log(dataset);
-
   const data = await d3.json(uri + dataset.endpoint);
-  console.log(data);
 
+  // add empty select option
   let empty = {};
   empty[dataset.pk] = "";
   data.unshift(empty);

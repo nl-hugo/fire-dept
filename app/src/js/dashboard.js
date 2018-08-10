@@ -10,6 +10,8 @@ import * as metrics from "./metrics";
 const BASE_URI = "https://fire-dept-api.herokuapp.com/";
 const API_ENDPOINT = "alarmeringen/";
 
+const parseDate = d3.timeParse("%Y-%m-%d");
+
 let params = {};
 
 let api = {
@@ -50,6 +52,10 @@ async function update(label, value) {
 
     let data = await api.getAlarmeringen(uri);
     console.log(data);
+
+    data.map(d => d.date = parseDate(d.datum));
+    // data.forEach(d => d.date = parseDate(d.datum));
+    // d3.map(data, d => {console.log(d.date); console.log(d.datum)});
 
     metrics.update(data);
 

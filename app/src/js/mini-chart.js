@@ -33,13 +33,13 @@ function addChart(svg, data) {
 
   var parseDate = d3.timeParse("%Y-%m-%d");
 
-  data.forEach(d => d.datum = parseDate(d.datum));
-  console.log(data);
+  // data.forEach(d => d.datum = parseDate(d.datum));
+  // console.log(data);
 
 
   var x = d3.scaleTime()
       .range([0, width])
-      .domain(d3.extent(data, d => d.datum));
+      .domain(d3.extent(data, d => d.date));
 
   console.log(x.domain());
 
