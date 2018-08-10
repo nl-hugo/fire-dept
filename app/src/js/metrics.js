@@ -11,34 +11,21 @@ const t = d3.transition()
     .duration(750);
 
 export function update(data) {
-  console.info("update metrics");
-
-  console.log(data);
-
   const types = d3.nest()
       .key(d => d.brandinfo)
       .entries(data)
       .sort((a, b) => d3.descending(a.values.length, b.values.length));
 
-  // sort by size
-  console.log(types);
-
+  div.selectAll(".a-metric").remove();
 
   const metrics = div.selectAll(".a-metric")
-      .data(types, d => d.key);
-
-  metrics.exit().transition(t)
-      .attr("opacity", 1e-6)
-      .remove();
-
-  const divs = metrics
+      .data(types)
     .enter().append("div")
-      // .attr("opacity", 1e-6)
       .attr("class", d => "a-metric " + d.key.replace(/ /g,"_"))
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
 
-  const stack = divs.append("span")
+  const stack = metrics.append("span")
       .attr("class", "fa-stack fa-2x")
       .style("font-size", "1.2em");
 
@@ -48,24 +35,21 @@ export function update(data) {
   stack.append("i")
       .attr("class", d => "fas fa-" + iconForType(d.key) + " fa-stack-1x fa-inverse");
 
-  divs.append("div")
+  metrics.append("div")
       .attr("class", "title")
       .text(d => d.key);
 
-  divs.append("div")
+  metrics.append("div")
       .attr("class", "number")
       .text(d => d.values.length);
 
-  divs.append("svg").attr("width", 200).attr("height", 40);
-    // .data(d => d.values);
+  metrics.append("svg").attr("width", 200).attr("height", 40);
 
   chart.update();
 }
 
 function mouseover() {
-
 }
 
 function mouseout() {
-  
 }
