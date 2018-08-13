@@ -21,6 +21,10 @@ export async function init(label, uri, callback) {
 
 function select(label, dataset, data) {
   d3.select(label)
+    .append("i")
+      .attr("class", "fas fa-spinner fa-spin wait-spinner wait-" + dataset.parameter);
+
+  d3.select(label)
     .append("text")
       .text(dataset.parameter);
 

@@ -36,12 +36,10 @@ let api = {
 
 async function update(label, value) {
   console.log(label.pk + " ==> " + value);
-
   params[label.parameter] = value;
-  // console.log(params);
 
-  // console.log("params  " + );
-  // console.log("filters " + );
+  // hide spinners
+  d3.selectAll(".wait-spinner.wait-" + label.parameter).classed("hidden", true);
 
   // Request data from apu once all params are there
   if (Object.keys(params).length === d3.selectAll(".a-parameter").size()) {
