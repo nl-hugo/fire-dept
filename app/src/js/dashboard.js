@@ -48,6 +48,9 @@ async function update(label, value) {
 
     console.log(uri);
 
+    d3.selectAll(".wait-spinner.wait-metrics").classed("hidden", false);
+    d3.selectAll(".a-metric").classed("dimmed", true);
+
     let data = await api.getAlarmeringen(uri);
     data.map(d => d.date = parseDate(d.datum));
     console.log(data);

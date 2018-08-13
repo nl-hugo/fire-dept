@@ -19,6 +19,7 @@ export function update(data) {
         d3.ascending(a.key, b.key) : 
         d3.descending(a.values.length, b.values.length));
 
+  d3.selectAll(".wait-spinner.wait-metrics").classed("hidden", true);
   div.selectAll(".a-metric").remove();
 
   const metrics = div.selectAll(".a-metric")
