@@ -3,12 +3,9 @@
  * @module metrics
  */
 import * as chart from "./mini-chart";
-import { iconForType } from "./util";
+import { iconForType, className } from "./util";
 
 const div = d3.select(".a-metrics");
-
-const t = d3.transition()
-    .duration(750);
 
 export function update(data) {
   const types = d3.nest()
@@ -25,7 +22,7 @@ export function update(data) {
   const metrics = div.selectAll(".a-metric")
       .data(types)
     .enter().append("div")
-      .attr("class", d => "a-metric " + d.key.replace(/ /g,"_"))
+      .attr("class", d => "a-metric " + className(d.key))
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
 
@@ -47,13 +44,15 @@ export function update(data) {
       .attr("class", "number")
       .text(d => d.values.length);
 
-  metrics.append("svg").attr("width", 200).attr("height", 40);
+
+  metrics.append("svg").attr("width", 200).attr("height", 60);
 
   chart.update();
 }
 
-function mouseover() {
+function mouseover(d) {
+  // console.log(d);
 }
 
-function mouseout() {
+function mouseout(d) {
 }

@@ -1,7 +1,8 @@
 // _metrics.scss
 
 .a-metric {
-  height: 60px;
+  height: 80px;
+  width: 100%;
   display: block;
 
   :hover {
@@ -31,6 +32,24 @@
 
   &.dimmed {
     opacity: 0.5;
+  }
+
+  .line {
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
+  }
+
+  .area {
+    stroke: none;
+    fill: #e7e7e7;
+  }
+
+  svg {
+    position: relative;
+    bottom: 60px;
+    left: 40px;
+    z-index: -99 !important;
   }
 }
 

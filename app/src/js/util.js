@@ -19,3 +19,7 @@ const icons = {
 export function iconForType(t) {
   return d3.map(icons).get(t) || "question";
 }
+
+export function className(d) {
+  return d.replace(/ /g,"_");
+}

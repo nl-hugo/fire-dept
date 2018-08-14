@@ -2,63 +2,82 @@
  * Map mini-chart
  * @module mini-chart
  */
-
-
-function init() {
-  console.log("init minichart");
-}
+import { className } from "./util";
 
 export function update() {
-  console.log("update minichart");
-  // console.log(elt);
-  // console.log(elt.data());
+  const elt = d3.selectAll(".a-metric svg");
+  const data = elt.data().map(d => d.values).reduce((a,b) => a.concat(b), []);
 
-  const svg = d3.selectAll(".a-metric svg");
+  const numbers = d3.nest()
+    .key(d => d.brandinfo)
+    .key(d => d.datum)
+    .rollup(d => d.length)
+    .entries(data);
 
-  svg.each(d => {
-    // console.log(d.key);
-    // console.log(d.values);
-    addChart(svg, d.values);
-  });
+  console.debug(numbers);
 
-  // TODO: aggregeren naar maand
-  // TODO: x en y domein over alle minis heen berekenen
+  let dateRange = [new Date(), new Date()];
+  dateRange[0].setDate(dateRange[0].getDate() - 35);
 
+  const maxValue = d3.max(numbers, d => d3.sum(d.values, e => e.value));
+
+  elt.each(d => {
+    let dt = numbers.filter(n => n.key === d.key)[0];
+    addChart(dt.key, dt.values, dateRange, maxValue);
+  })
 }
 
-function addChart(svg, data) {
-  var margin = {top: 8, right: 10, bottom: 2, left: 10},
+function addChart(key, numbers, dateRange, maxValue) {
+  const svg = d3.select(".a-metric." + className(key) + " svg");
+
+  const margin = {top: 20, right: 5, bottom: 2, left: 5},
       width = +svg.attr("width") - margin.left - margin.right,
-      height = +svg.attr("height") - margin.top - margin.bottom;
+      height = +svg.attr("height") - margin.top - margin.bottom,
+      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var parseDate = d3.timeParse("%Y-%m-%d");
+  const parseDate = d3.timeParse("%Y-%m-%d");
 
-  // data.forEach(d => d.datum = parseDate(d.datum));
-  // console.log(data);
+  // sort by date
+  numbers.sort((a, b) => d3.ascending(a.key, b.key));
 
+  // compute cumulative sum
+  let sum = 0;
+  numbers.map((d) => {
+    d.date = parseDate(d.key);
+    sum += d.value; 
+    d.count = sum;
+  });
 
-  var x = d3.scaleTime()
+  // duplicate last value to ensure data until today
+  numbers.push({
+    "date": dateRange[1],
+    "count": numbers[numbers.length -1]["count"]
+  });
+
+  const x = d3.scaleTime()
       .range([0, width])
-      .domain(d3.extent(data, d => d.date));
+      .domain(dateRange);
 
-  console.log(x.domain());
+  const y = d3.scaleLinear()
+      .range([height, 0])
+      .domain([0, maxValue]);
 
-/*
-  var y = d3.scaleLinear()
-      .range([height, 0]);  
-
-
-  var area = d3.svg.area()
-      .x(function(d) { return x(d.datum); })
-      .y0(height)
-      .y1(function(d) { return y(d.price); });
-
-  var line = d3.svg.line()
+  const area = d3.area()
+      .curve(d3.curveMonotoneX)
       .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.price); });
+      .y0(height)
+      .y1(function(d) { return y(d.count); });
 
-  svg.append("path")
+  const line = d3.line()
+      .curve(d3.curveMonotoneX)
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.count); });
+
+  g.append("path")
       .attr("class", "area")
-      .attr("d", function(d) { y.domain([0, d.maxPrice]); return area(d.values); });
-*/
+      .attr("d", area(numbers));
+
+  g.append("path")
+      .attr("class", "line")
+      .attr("d", line(numbers));
 }

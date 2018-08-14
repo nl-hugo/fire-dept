@@ -5,6 +5,7 @@
 import * as parameter from "./parameter";
 import * as map from "./map";
 import * as metrics from "./metrics";
+import * as facts from "./facts";
 
 
 const BASE_URI = "https://fire-dept-api.herokuapp.com/";
@@ -12,7 +13,7 @@ const API_ENDPOINT = "alarmeringen/";
 
 const parseDate = d3.timeParse("%Y-%m-%d");
 
-let params = {};
+let params = { "datum_after": "", };
 
 let api = {
   getAlarmeringen: function(uri, alarmeringen) {
@@ -20,10 +21,8 @@ let api = {
       if (!alarmeringen) {
         alarmeringen = [];
       }
-      // console.log(repsonse);
       alarmeringen = alarmeringen.concat(response.results);
-      // console.log(alarmeringen.length + " alarmeringen so far");
-      console.log(response.next);
+      console.debug(response.next);
       
       if (response.next) {
         return api.getAlarmeringen(response.next, alarmeringen);
@@ -33,33 +32,45 @@ let api = {
   }
 }
 
-
 async function update(label, value) {
-  console.log(label.pk + " ==> " + value);
+  console.debug(label.pk + " ==> " + value);
   params[label.parameter] = value;
 
   // hide spinners
   d3.selectAll(".wait-spinner.wait-" + label.parameter).classed("hidden", true);
 
-  // Request data from apu once all params are there
-  if (Object.keys(params).length === d3.selectAll(".a-parameter").size()) {
+  // Request data from api once all params are there
+  if (Object.keys(params).length === d3.selectAll(".a-parameter").size() + 1) {
+
+    // TODO: no parameter hard-coding
+    (params["capcodes"] === "" & params["plaats"] === "") ? setDateLimiter(7) : setDateLimiter(-1);
+
     const qs = "?" + serialize(params),
       uri = BASE_URI + API_ENDPOINT + qs;
 
-    console.log(uri);
-
+    // update ui status
     d3.selectAll(".wait-spinner.wait-metrics").classed("hidden", false);
     d3.selectAll(".a-metric").classed("dimmed", true);
 
+    // get data
     let data = await api.getAlarmeringen(uri);
     data.map(d => d.date = parseDate(d.datum));
-    console.log(data);
-    // data.forEach(d => d.date = parseDate(d.datum));
-    // d3.map(data, d => {console.log(d.date); console.log(d.datum)});
+    console.debug(data);
 
+    // update ui
+    facts.update(data);
     metrics.update(data);
     map.update(data);
   }
+}
+
+function setDateLimiter(days) {
+  let date = "";
+  if (days > 0) {
+    date = new Date();
+    date = d3.timeFormat("%Y-%m-%d")(date.setDate(date.getDate() - days));
+  }
+  params["datum_after"] = date;
 }
 
 function serialize(obj) {
@@ -78,5 +89,3 @@ function serialize(obj) {
     parameter.init(this, BASE_URI, update);
   });
 })();
-
-// init();
