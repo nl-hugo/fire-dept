@@ -7,22 +7,26 @@ let next;
 export async function init(label, uri, callback) {
   next = callback;
   const dataset = label.dataset;
-  const data = await d3.json(uri + dataset.endpoint);
 
-  // add empty select option
-  let empty = {};
-  empty[dataset.pk] = "";
-  data.unshift(empty);
-
-  if (dataset.control == "select") {
-    select(label, dataset, data);
-  }
-}
-
-function select(label, dataset, data) {
+  // add spinner
   d3.select(label)
     .append("i")
       .attr("class", "fas fa-spinner fa-spin wait-spinner wait-" + dataset.parameter);
+
+  // get data
+  const data = await d3.json(uri + dataset.endpoint);
+
+  if (dataset.control == "select") {
+    addSelect(label, dataset, data);
+  }
+}
+
+function addSelect(label, dataset, data) {
+  // add empty select option
+  let empty = {};
+  empty[dataset.pk] = "";
+  empty[dataset.desc] = "--alle--";
+  data.unshift(empty);
 
   d3.select(label)
     .append("text")
@@ -31,7 +35,7 @@ function select(label, dataset, data) {
   const select = d3.select(label)
     .append("select")
       .attr("class", "form-control form-control-sm")
-      .on("change", function() { next(label.dataset, this.value); });
+      .on("change", function() { next(dataset, this.value); });
 
   select.selectAll("option")
       .data(data)
@@ -41,7 +45,7 @@ function select(label, dataset, data) {
       .each(function(d) {
         if (d[dataset.pk] == dataset.defaultValue) {
           d3.select(this).attr("selected", true);
-          next(label.dataset, this.value);
+          next(dataset, this.value);
         }
       });
 }
