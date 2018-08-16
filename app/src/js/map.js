@@ -21,7 +21,7 @@ export function update(data) {
   alarmeringen.clearLayers();
   data.filter(d => d.lat && d.lon)
     .map(d => addMarker(d));
-  if (data && data.length > 0) {
+  if (data.length > 0 && data[0].lat && data[0].lon) {
     mymap.flyTo(L.latLng(data[0].lat, data[0].lon));
   }
 }
