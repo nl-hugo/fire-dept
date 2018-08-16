@@ -21,7 +21,9 @@ export function update(data) {
   alarmeringen.clearLayers();
   data.filter(d => d.lat && d.lon)
     .map(d => addMarker(d));
-  mymap.flyTo(L.latLng(data[0].lat, data[0].lon));
+  if (data && data.length > 0) {
+    mymap.flyTo(L.latLng(data[0].lat, data[0].lon));
+  }
 }
 
 function popupText(d) {
