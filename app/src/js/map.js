@@ -14,11 +14,14 @@ const alarmeringen = L.layerGroup(),
       "desc": "Brandweer Maarn/Maarsbergen",
     };
 
+let mymap;
+
 /** Update the map */
 export function update(data) {
   alarmeringen.clearLayers();
   data.filter(d => d.lat && d.lon)
     .map(d => addMarker(d));
+  mymap.flyTo(L.latLng(data[0].lat, data[0].lon));
 }
 
 function popupText(d) {
@@ -44,7 +47,7 @@ function addMarker(d) {
       attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
   });
 
-  const mymap = L.map("mapid", {
+  mymap = L.map("mapid", {
     center: [station.lat, station.lon], 
     zoom: 11,
     layers: [base, alarmeringen]
