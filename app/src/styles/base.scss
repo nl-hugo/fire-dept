@@ -38,5 +38,9 @@ main {
   color: $primary-color;
 }
 
+.hidden {
+  display: none;
+}
+
 @include generate-elements("prio1-0", $secondary-color);
 @include generate-elements("prio1-1", $primary-color);

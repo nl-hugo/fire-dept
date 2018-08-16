@@ -34,7 +34,7 @@
       <div class="container">
 
         <!-- filters -->
-        <div class="row mb-5">
+        <div class="row mb-3">
           <div class="col-md">
             <form>
               <div class="form-row">
@@ -95,9 +95,12 @@
 
         <!-- summary -->
         <div class="row mb-5">
-          <div class="col-md a-facts">
+          <div class="col-12 alert alert-warning hidden" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> Geen resultaten gevonden. Probeer een andere zoekopdracht.
+          </div>
+          <div class="col-12 a-facts">
             <p>
-            Tussen <span class="a-fact" data-value="d3.min(v, d => d.date)" data-timeformat="%d-%m-%Y" data-valueformat=""></span> en <span class="a-fact" data-value="new Date()" data-timeformat="%d-%m-%Y" data-valueformat=""></span> zijn er totaal <span class="a-fact" data-value="d3.sum(v, d => 1)" data-timeformat="" data-valueformat=".0f"></span> alarmeringen geweest. De laatste alarmering is <span class="a-fact" data-value="Math.floor(((new Date()) - d3.max(v, d => d.date)) / (1000*60*60*24))" data-timeformat="" data-valueformat=".0f"></span> dagen geleden.
+            Tussen <span class="a-fact" data-value="d3.min(v, d => d.date)" data-timeformat="%d-%m-%Y" data-valueformat=""></span> en <span class="a-fact" data-value="new Date()" data-timeformat="%d-%m-%Y" data-valueformat=""></span> zijn er totaal <span class="a-fact" data-value="d3.sum(v, d => 1)" data-timeformat="" data-valueformat=".0f"></span> alarmeringen geweest. De laatste alarmering is <span class="a-fact" data-value="Math.floor((new Date() - d3.max(v, d => d.date)) / (1000*60*60*24))" data-timeformat="" data-valueformat=".0f"></span> dagen geleden.
             </p>
           </div>
         </div>
