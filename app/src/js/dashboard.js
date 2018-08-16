@@ -17,6 +17,7 @@ let params = { "datum_after": "", };
 
 let api = {
   getAlarmeringen: function(uri, alarmeringen) {
+    console.debug(uri);
     return d3.json(uri).then(function(response) {
       if (!alarmeringen) {
         alarmeringen = [];
@@ -52,10 +53,14 @@ async function update(label, value) {
     d3.selectAll(".wait-spinner.wait-metrics").classed("hidden", false);
     d3.selectAll(".a-metric").classed("dimmed", true);
 
-    // get data
+    // get and prepare data
     let data = await api.getAlarmeringen(uri);
+    data = data.filter(d => !d.melding.startsWith("MELDING VERVALT"));
     data.map(d => d.date = parseDate(d.datum));
     console.debug(data);
+
+    d3.selectAll(".alert").classed("hidden", data.length > 0);
+    d3.selectAll(".a-facts").classed("hidden", data.length <= 0);
 
     // update ui
     facts.update(data);
