@@ -28,7 +28,7 @@
     "build:production": "webpack --config ./config/webpack-production.config.js --env=production --progress --profile --colors",
     "lint": "eslint ./{server,app,config}/**/*{config,''}.js",
     "postinstall": "npm run build:production",
-    "start": "node server",
+    "start": "node server"
   },
   "dependencies": {
     "css-loader": "1.0.0",
