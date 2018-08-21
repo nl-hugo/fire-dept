@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const path = require("path");
 
 const plugins = [
@@ -8,6 +9,9 @@ const plugins = [
     filename: "index.html",
     title: "Brandmeldingen",
     favicon: "favicon.ico"
+  }),
+  new CleanWebpackPlugin(["dist"], {
+    root: path.join(__dirname, '..')
   }),
 ];
 
