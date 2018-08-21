@@ -1,17 +1,11 @@
 {
-  "extends": "eslint:recommended",
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "node": true,
-  },
+  "extends": "airbnb-base",
   "parser": "babel-eslint",
   "plugins": [
     "babel"
   ],
   "rules": {
-    "indent": ["error", 2],
+    "indent": ["warn", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],

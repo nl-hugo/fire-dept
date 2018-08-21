@@ -1,0 +1,78 @@
+{
+  "bootstrapVersion": 4,
+
+  "useFlexbox": true,
+
+  "extractStyles": false,
+  
+  "preBootstrapCustomizations": "./app/src/styles/_config.scss",
+
+  "styleLoaders": [
+    "style-loader",
+    "css-loader",
+    "postcss-loader",
+    "sass-loader"
+  ],
+
+  scripts: {
+    "alert": true,
+    "button": false,
+    "carousel": false,
+    "collapse": false,
+    "dropdown": false,
+    "modal": false,
+    "popover": false,
+    "scrollspy": false,
+    "tab": false,
+    "tooltip": false,
+    "util": true
+  },
+
+  styles: {
+    // Mixins
+    mixins: true,
+
+    // Reset and dependencies
+    //normalize: true,
+    print: true,
+
+    // Core CSS
+    reboot: true,
+    type: true,
+    images: true,
+    code: true,
+    grid: true,
+    tables: false,
+    forms: true,
+    buttons: false,
+
+    // Components
+    badge: false,
+    dropdown: false,
+    "button-group": false,
+    "input-group": false,
+    "custom-forms": false,
+    nav: false,
+    navbar: false,
+    card: false,
+    breadcrumb: false,
+    pagination: false,
+    jumbotron: false,
+    alert: true,
+    progress: false,
+    media: false,
+    "list-group": false,
+    "responsive-embed": false,
+    close: false,
+
+    // Components w/ JavaScript
+    modal: false,
+    tooltip: false,
+    popover: false,
+    carousel: false,
+
+    // Utility classes
+    transitions: false,
+    utilities: true
+  }
+}
