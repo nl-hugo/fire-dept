@@ -8,7 +8,7 @@ function addChart(key, numbers, dateRange, maxValue) {
   const svg = d3.select(`.a-metric.${className(key)} svg`);
 
   const margin = {
-    top: 35, right: 5, bottom: 2, left: 5,
+    top: 35, right: 5, bottom: 2, left: 45,
   };
 
   const width = +svg.attr("width") - margin.left - margin.right;
